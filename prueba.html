@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+    background: linear-gradient(#005082, #00a8cc);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+.header__tittle {
+    font-size: larger;
+}
+
+.main_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main_container__card {
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .2);
+    border: solid 1px white;
+    border-radius: 15px;
+    padding: 15px;
+    padding-top: 25px;
+}
+
+.main_container__img {
+    margin-top: -30px;
+}
+
+.main_container__card--title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main_container__card img {
+    width: 50px;
+}
+
+.main_container__img img {
+    width: 80px;
+}
+
+.container_options {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    padding: 15px;
+    border: solid 1px white;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.container_options_img {
+    display: flex;
+    justify-content: space-around;
+}
+
+.container_options__option img {
+    transition: transform .5s;
+    /* Animation */
+    width: 60px;
+}
+
+.container_options__option :hover {
+    transform: scale(1.5);
+}
+
+.instructions {
+    display: flex;
+    justify-content: center;
+    height: 35px;
+}
+
+button {
+    margin: 10px;
+    width: 150px;
+    background-color: #47c721;
+    outline: none;
+    border: solid 1px transparent;
+    border-radius: 15px;
+    color: white;
+    transition: transform .5s;
+    height: 28px;
+}
+
+button:hover {
+    transform: scale(1.2);
+    color: black;
+}
+
+.container_options__button {
+    background-color: transparent;
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+}
+
+#puntos_usuario {
+    margin-top: 2px;
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+#puntos_cpu {
+    margin-top: 2px;
+    font-size: 25px;
+    font-weight: bolder;
+}
+    </style>
+ 
+</head>
+<body>
+        <header class="header">
+            <h2 class="header__tittle">Juego piedra, papel, tijeras</h2>
+        </header>
+
+
+
+        <main class="main_container">
+            <div class="main_container__card">
+                <div class="main_container__card--title">
+                    <img id="usuario" src="./img/user_icon.png" alt="">
+                    <p>Usuario</p>
+                    <p id="puntos_usuario">0</p>
+                </div>
+    
+                <div class="main_container__img">
+                    <img src="./img/vs_icon.png" alt="">
+                </div>
+    
+                <div class="main_container__card--title">
+                    <img id="cpu" src="./img/cpu.png" alt="">
+                    <p>CPU</p>
+                    <p id="puntos_cpu">0</p>
+                </div>
+            </div>
+            <div class="container_options">
+                <div class="container_options_img">
+                    <div class="container_options__option">
+                        <button id="Piedra" class="container_options__button"></button>
+    
+                    </div>
+    
+                    <div class="container_options__option">
+                        <button id="Papel" class="container_options__button"></button>
+    
+                    </div>
+    
+                    <div class="container_options__option">
+                        <button id="Tijeras" class="container_options__button"></button>
+    
+                    </div>
+                </div>
+                <div class="instructions">
+                    <p id=quiengana></p>
+                    
+                </div>
+            </div>
+    
+            <div class="container_button">
+                <button id="Iniciar_juego">Iniciar juego</button>
+            </div>
+        </main>
+
+     
+</body>
+<script>
+    var btn_piedra = document.getElementById("Piedra");
+var btn_papel = document.getElementById("Papel");
+var btn_tijeras = document.getElementById("Tijeras");
+var btn_iniciar = document.getElementById("Iniciar_juego");
+var img_usuario = document.getElementById("usuario");
+var img_cpu = document.getElementById("cpu");
+var marcador_usuario = document.getElementById("puntos_usuario").innerText;
+var marcador_cpu = document.getElementById("puntos_cpu").innerText;
+
+
+var Opcion_jugador;
+var Opcion_cpu;
+
+btn_piedra.style.backgroundImage = " url('./img/Piedra.png')";
+btn_papel.style.backgroundImage = " url('./img/Papel.png')";
+btn_tijeras.style.backgroundImage = "url('./img/Tijeras.png')";
+
+btn_iniciar.onclick = function() {
+console.log(Opcion_jugador);
+Opcion_cpu = num_aleatorio()
+display_opcion_cpu(Opcion_cpu);
+game(Opcion_jugador, Opcion_cpu);
+
+}
+btn_piedra.onclick = function() {
+Opcion_jugador = 0;
+img_usuario.src = "./img/Piedra.png";
+}
+btn_papel.onclick = function() {
+Opcion_jugador = 1;
+img_usuario.src = "./img/Papel.png";
+}
+btn_tijeras.onclick = function() {
+Opcion_jugador = 2;
+img_usuario.src = "./img/Tijeras.png";
+}
+
+
+function num_aleatorio() {
+return parseInt(Math.random() * 3);
+}
+
+function game(opcion_jugador, opcion_cpu) {
+var escenario_1;
+var escenario_2;
+var escenario_3;
+var empate;
+if (opcion_jugador === opcion_cpu) {
+empate = true;
+} else if (opcion_jugador === 0 && opcion_cpu === 2) {
+escenario_1 = true;
+} else if (opcion_jugador === 1 && opcion_cpu === 0) {
+escenario_2 = true;
+} else if (opcion_jugador === 2 && opcion_cpu === 1) {
+escenario_3 = true;
+}
+
+
+if (escenario_1 || escenario_2 || escenario_3) {
+document.getElementById("quiengana").innerText = "USUARIO GANA";
+marcador_usuario++;
+document.getElementById("puntos_usuario").innerText = marcador_usuario;
+
+
+} else if (empate) {
+document.getElementById("quiengana").innerText = "EMPATE";
+} else {
+document.getElementById("quiengana").innerText = "CPU GANA";
+marcador_cpu++;
+document.getElementById("puntos_cpu").innerText = marcador_cpu;
+}
+}
+
+function display_opcion_cpu(opcion) {
+if (opcion === 0) {
+img_cpu.src = "./img/Piedra.png";
+} else if (opcion === 1) {
+img_cpu.src = "./img/Papel.png";
+} else {
+img_cpu.src = "./img/Tijeras.png";
+}
+}
+</script>
+
+</html>

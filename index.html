@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Rock-Paper-Scissors</title>
+    <style>
+        body {
+            font-family: 'Bangers', cursive;
+            margin: 0;
+        }
+        .form-container {
+            width: 100%;
+            height: 90vh;
+            display: grid;
+            justify-self: center;
+            text-align: center;
+            place-items: center;
+
+        }
+        .manvsmachine {
+            display: flex;
+            width: 300px;
+            justify-content: center;
+            text-align: center;
+          /*  align-items: center;*/
+            background-color: rgba(0, 0, 0, .2);
+         /*   border: solid 1px white;*/
+            border-radius: 20px;
+         /*   padding: 15px;*/
+            padding-top: 0px;
+        }
+        .item1 {
+            display: flex;
+            width: 100px;
+            height: 100px;
+            align-items: center;
+            justify-content: center;
+        }
+        .item2 {
+            width: 100px;
+            height: 100px;
+        }
+        .p1 {
+            margin-top: 25px;
+        }
+        .p2 {
+            font-size: 32px;
+        }
+        p {
+            margin: 0;
+        }
+        .results {
+            display: flex;
+            width: 300px;
+            justify-content: center;
+            text-align: center;
+        }
+        .item1 p {
+            margin: 0;
+        }
+        .choose {
+            display: flex;
+            width: 300px;
+            height: 100px;
+            justify-content: space-around;
+            text-align: center;
+            align-items: center;
+        }  
+        .results {
+            display: flex;
+            width: 300px;
+            height: 100px;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+        }  
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: darkcyan;
+        }
+        }
+
+
+button:hover {
+    transform: scale(1.5);
+    /*color: black;*/
+}
+
+button {
+/*    margin: 10px;*/
+ /*   width: 150px;*/
+/*    background-color: #47c721;*/
+ /*   outline: none;*/
+    border: transparent;
+    border-radius: 12px;
+ /*   color: white; */
+    transition: transform .5s;
+    width: auto;
+/*    height: 28px; */
+    background: white;
+    cursor: pointer; 
+}
+
+img {
+    width: 50px; 
+    height: 50px;
+}
+.imgbig {
+    width: 90px; 
+    height: 90px;
+}
+.playagain {
+    background-color: cornflowerblue;
+            border-radius: 8px;
+            border: none;
+            color: black;
+            width: 300px;
+            cursor: pointer; /*al pasar el cursor nos aparece una manita*/
+            font-size: 18px;
+            font-weight: bold;
+            height: 40px;
+}
+.winner1 {
+    font-size: 28px;
+    color: orangered;
+}
+    </style>
+
+
+</head>
+<body>
+    <div class="form-container">
+        <div>
+            <p class="title">Rock - Paper - Scissors</p>
+        </div>
+        <div class="manvsmachine">
+            <div class="item1">
+                <p id="userwins" class="p2">0</p>     
+            </div>
+            <div class="item2">
+                <p class="p1">User</p> 
+                <p>VS</p>
+                <P>Machine</P>
+            </div>
+            <div class="item1">
+                <p id="machinewins" class="p2">0</p>
+            </div>
+        </div>
+        <div>
+            <p>Choose one</p>
+        </div>
+        <div class="choose">
+            <div class="container_button">
+                <button id="piedra" class="buttons" >
+                    <img src="./img/rock.png" >
+                </button>
+            </div>
+            <div class="container_button">
+                <button id="papel" class="buttons">
+                    <img src="./img/paper.png" >
+                </button>
+            </div>
+            <div class="container_button">
+                <button id="tijeras" class="buttons">
+                    <img src="./img/scissors.png" >
+                </button>
+            </div>
+        </div>
+     <!--   <input type="button" id="play" value="PLAY">-->
+        <div class="results">
+            <div>
+                <img id="userchose" class="imgbig" src="./img/blank.png" >  
+            </div>
+            <div>
+                <p>- VS -</p> 
+            </div>
+            <div>
+                <img id="machinechose" class="imgbig" src="./img/blank.png" > 
+            </div>
+        </div>
+        <div>
+            <p id = "winner" class="winner1"></p>
+        </div>
+        <input type="button" id="playagain" value="PLAY AGAIN" class="playagain">
+    </div>
+
+    <script>
+
+    var valor1;
+    var maquina;
+    var numuserwins = 0;
+    var nummachinewins = 0;
+
+    //Este coodigo se usa para que la maquina escoja de forma aleatoria
+function machineischoosing(){
+    maquina = Math.ceil(Math.random()*3);
+    switch (maquina){
+        case 1:
+        maquina = "piedra";
+        document.getElementById("machinechose").src = "./img/rock.png";
+        break;
+        case 2:
+        maquina = "papel";
+        document.getElementById("machinechose").src = "./img/paper.png";
+        break;
+        case 3:
+        maquina = "tijeras";
+        document.getElementById("machinechose").src = "./img/scissors.png";
+        break;
+    }
+}
+
+document.getElementById("piedra").onclick = function(){
+    document.getElementById("userchose").src = "./img/rock.png";
+    valor1 = "piedra";
+    machineischoosing();
+    result();
+    }
+
+document.getElementById("papel").onclick = function(){
+    document.getElementById("userchose").src = "./img/paper.png";
+    valor1 = "papel";
+    machineischoosing();
+    result();
+    }
+
+document.getElementById("tijeras").onclick = function(){
+    document.getElementById("userchose").src = "./img/scissors.png";
+    valor1 = "tijeras";
+    machineischoosing();
+    result();
+    }
+
+
+    
+    //Realizamos la comparacion para mostrar un resultado
+    function result() {
+switch (valor1){
+    case "piedra":
+        switch (maquina){
+            case "piedra":
+            document.getElementById("winner").innerText = "DRAW!";
+            break;
+            case "papel":
+            document.getElementById("winner").innerText = "YOU LOSE!";
+            nummachinewins++;
+            document.getElementById("machinewins").innerText = nummachinewins;
+            break;
+            case "tijeras":
+            document.getElementById("winner").innerText = "YOU WIN!";
+            numuserwins++;
+            document.getElementById("userwins").innerText = numuserwins;
+            break;
+        }
+    break;
+    case "papel":
+        switch (maquina){
+            case "piedra":
+            document.getElementById("winner").innerText = "YOU WIN!";
+            numuserwins++;
+            document.getElementById("userwins").innerText = numuserwins;
+            break;
+            case "papel":
+            document.getElementById("winner").innerText = "DRAW!";
+            break;
+            case "tijeras":
+            document.getElementById("winner").innerText = "YOU LOSE!";
+            nummachinewins++;
+            document.getElementById("machinewins").innerText = nummachinewins;
+            break;   
+        }
+    break;
+    case "tijeras":
+        switch (maquina){
+            case "piedra":
+            document.getElementById("winner").innerText = "YOU LOSE!";
+            numuserwins++;
+            document.getElementById("machinewins").innerText = numuserwins;
+            break;
+            case "papel":
+            document.getElementById("winner").innerText = "YOU WIN!";
+            numuserwins++;
+            document.getElementById("userwins").innerText = numuserwins;
+            break;
+            case "tijeras":
+            document.getElementById("winner").innerText = "DRAW!";
+            break;   
+        }
+    }
+}
+document.getElementById("playagain").onclick = function(){
+    document.getElementById("userchose").src = "./img/blank.png";
+    document.getElementById("machinechose").src = "./img/blank.png";
+    nummachinewins = 0;
+    numuserwins = 0;
+    document.getElementById("userwins").innerText = numuserwins;
+    document.getElementById("machinewins").innerText = nummachinewins;
+    document.getElementById("winner").innerText = "";
+    valor1 = "tijeras";
+
+    }
+    </script>
+
+</body>
+</html>
