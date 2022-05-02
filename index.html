@@ -14,51 +14,52 @@
             margin: 0;
         }
         .form-container {
-            width: 100%;
-            height: 90vh;
+            width: 100vw;
+            height: 100vh; 
             display: grid;
-            justify-self: center;
-            text-align: center;
             place-items: center;
-
         }
         .manvsmachine {
             display: flex;
             width: 300px;
+            height: 64px;
             justify-content: center;
             text-align: center;
-          /*  align-items: center;*/
-            background-color: rgba(0, 0, 0, .2);
-         /*   border: solid 1px white;*/
+            background-color: rgb(154, 166, 177);
             border-radius: 20px;
-         /*   padding: 15px;*/
-            padding-top: 0px;
+            padding-top: 0px;     
         }
-        .item1 {
-            display: flex;
+        .manvsmachine .item1:nth-child(odd) { /*(odd) es igual que (2n+1)*/
+            display: grid;
             width: 100px;
-            height: 100px;
             align-items: center;
+        }
+        .manvsmachine .item1:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            width: 100px;
             justify-content: center;
         }
-        .item2 {
-            width: 100px;
-            height: 100px;
-        }
-        .p1 {
-            margin-top: 25px;
-        }
+
         .p2 {
             font-size: 32px;
         }
         p {
             margin: 0;
         }
+        .form-container .user_machine-text {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 350px;
+            text-align: center;
+            font-size: 28px;
+        }
         .results {
             display: flex;
             width: 300px;
             justify-content: center;
             text-align: center;
+            font-size: 28px;
         }
         .item1 p {
             margin: 0;
@@ -66,10 +67,11 @@
         .choose {
             display: flex;
             width: 300px;
-            height: 100px;
+            height: 70px;
             justify-content: space-around;
             text-align: center;
             align-items: center;
+
         }  
         .results {
             display: flex;
@@ -80,7 +82,7 @@
             align-items: center;
         }  
         .title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             color: darkcyan;
         }
@@ -108,12 +110,12 @@ button {
 }
 
 img {
-    width: 50px; 
-    height: 50px;
+    width: 70px; 
+    height: 70px;
 }
 .imgbig {
-    width: 90px; 
-    height: 90px;
+    width: 110px; 
+    height: 110px;
 }
 .playagain {
     background-color: cornflowerblue;
@@ -126,8 +128,9 @@ img {
             font-weight: bold;
             height: 40px;
 }
-.winner1 {
-    font-size: 28px;
+.winner1 p {
+    height: 32px;
+    font-size: 32px;
     color: orangered;
 }
     </style>
@@ -143,7 +146,7 @@ img {
             <div class="item1">
                 <p id="userwins" class="p2">0</p>     
             </div>
-            <div class="item2">
+            <div class="item1">
                 <p class="p1">User</p> 
                 <p>VS</p>
                 <P>Machine</P>
@@ -151,6 +154,26 @@ img {
             <div class="item1">
                 <p id="machinewins" class="p2">0</p>
             </div>
+        </div>
+        <div class="user_machine-text">
+            <div>USER</div>
+            <div>MACHINE</div>
+        </div>
+
+     <!--   <input type="button" id="play" value="PLAY">-->
+        <div class="results">
+            <div>
+                <img id="userchose" class="imgbig" src="./img/blank.png" >  
+            </div>
+            <div>
+                <p>- VS -</p> 
+            </div>
+            <div>
+                <img id="machinechose" class="imgbig" src="./img/blank.png" > 
+            </div>
+        </div>
+        <div class="winner1">
+            <p id = "winner"></p>
         </div>
         <div>
             <p>Choose one</p>
@@ -172,22 +195,8 @@ img {
                 </button>
             </div>
         </div>
-     <!--   <input type="button" id="play" value="PLAY">-->
-        <div class="results">
-            <div>
-                <img id="userchose" class="imgbig" src="./img/blank.png" >  
-            </div>
-            <div>
-                <p>- VS -</p> 
-            </div>
-            <div>
-                <img id="machinechose" class="imgbig" src="./img/blank.png" > 
-            </div>
-        </div>
-        <div>
-            <p id = "winner" class="winner1"></p>
-        </div>
-        <input type="button" id="playagain" value="PLAY AGAIN" class="playagain">
+
+        <input type="button" id="playagain" value="- RESET GAME -" class="playagain">
     </div>
 
     <script>
@@ -196,9 +205,40 @@ img {
     var maquina;
     var numuserwins = 0;
     var nummachinewins = 0;
+    var n = 0;
+    var test = 0;
+    var bucle = 0;
+ 
+
+
+function randomdisplay(){
+    if(bucle==15){
+        bucle = 0;
+        n = 0;
+        machineischoosing();
+        result();
+        clearInterval(repit);
+    } else {
+        n++;
+        bucle++;
+        switch (n){  
+            case 1: 
+            document.getElementById("machinechose").src = "./img/rock.png"; 
+            break; 
+            case 2:
+            document.getElementById("machinechose").src = "./img/paper.png";  
+            break;
+            case 3:
+            document.getElementById("machinechose").src = "./img/scissors.png";  
+            n=0;
+            break;
+        }
+    }  
+}
 
     //Este coodigo se usa para que la maquina escoja de forma aleatoria
 function machineischoosing(){
+
     maquina = Math.ceil(Math.random()*3);
     switch (maquina){
         case 1:
@@ -218,23 +258,23 @@ function machineischoosing(){
 
 document.getElementById("piedra").onclick = function(){
     document.getElementById("userchose").src = "./img/rock.png";
+    document.getElementById("winner").innerText = "";
     valor1 = "piedra";
-    machineischoosing();
-    result();
-    }
+    repit= setInterval(randomdisplay, 110);
+}
 
 document.getElementById("papel").onclick = function(){
     document.getElementById("userchose").src = "./img/paper.png";
+    document.getElementById("winner").innerText = "";
     valor1 = "papel";
-    machineischoosing();
-    result();
+    repit= setInterval(randomdisplay, 110);
     }
 
 document.getElementById("tijeras").onclick = function(){
     document.getElementById("userchose").src = "./img/scissors.png";
+    document.getElementById("winner").innerText = "";
     valor1 = "tijeras";
-    machineischoosing();
-    result();
+    repit= setInterval(randomdisplay, 110);
     }
 
 
